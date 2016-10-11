@@ -1,0 +1,14 @@
+{% if all_files %}
+
+    <h2>Uploaded files</h2>
+    {% for file in all_files %}
+        <a href="{% url 'upload:detail' file.id %}">{{ file.name }}</a> - <a href=""> Download </a>
+        <br>
+    {% endfor %}
+
+{% else %}
+    <h3>No items have been uploaded</h3>
+{% endif %}
+
+<a href="{% url 'upload:file-add' %}">Click here to upload a file</a>
+{#    </form>#}

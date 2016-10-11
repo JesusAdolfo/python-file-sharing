@@ -1,0 +1,10 @@
+1. create your model
+2. python manage.py makemigrations nameofmodel
+where nameofmodel is the name of your model
+3. python manage.py migrate
+to apply the migrations
+
+
+admin credentials:
+admin@example.com
+naraninc
