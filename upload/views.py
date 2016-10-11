@@ -2,14 +2,20 @@ from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Upload
+from django.views.static import serve
+import os
+from django.http import HttpResponse
+from django.utils.encoding import smart_str
+from wsgiref.util import FileWrapper
+import uuid
+from django.core.files import File
 
 
-def index(request):
-    all_files = Upload.objects.all()
-    context = {
-        'all_files': all_files,
-    }
-    return render(request, 'upload/index.html', context)
+class IndexView(generic.ListView):
+    template_name = 'upload/index.html'
+
+    def get_queryset(self):
+        return Upload.objects.all()
 
 
 class DetailView(generic.DetailView):
@@ -17,21 +23,27 @@ class DetailView(generic.DetailView):
     template_name = 'upload/detail.html'
 
 
-def downloaded(request):
-    all_files = Upload.objects.all()
-    try:
-        selected_file = request.POST['file']
-    except(KeyError, Upload.DoesNotExist):
-        return render(request, 'index.html', {
-            'all_files': all_files,
-            'error_message': "You did not select a valid file"
-        })
-    else:
-        selected_file.downloaded = True
-        selected_file.save()
-        return render(request, 'upload/index.html', {'all_files': all_files})
-
-
 class FileCreate(CreateView):
     model = Upload
     fields = ['name', 'file']
+
+
+class SuccessView(generic.TemplateView):
+    template_name = 'upload/sucess.html'
+
+
+def download(request, upload_id):
+    my_file = Upload.objects.get(pk=upload_id)
+    print("test==", my_file.file)
+    filename = my_file.file
+    path = "media/" + str(my_file.file)
+    print("test2: ", path)
+    print("test3: ", path.split('.').pop())
+
+    # return serve(request, os.path.basename(path), os.path.dirname(path))
+    filename = path # Select your file here.
+    wrapper = FileWrapper(open(filename, 'rb'))
+    response = HttpResponse(wrapper, content_type='text/plain')
+    response['Content-Disposition'] = 'attachment; filename="test.jpg"'
+    response['Content-Length'] = os.path.getsize(filename)
+    return response

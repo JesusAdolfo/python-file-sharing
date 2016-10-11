@@ -1,0 +1,11 @@
+<h1> Sucess! The file was uploaded sucessfuly</h1>
+<h3>You will be redirected to the main page</h3>
+
+<script>
+    window.setTimeout(function(){
+
+        // Move to a new location or you can do something else
+        window.location.href = "{% url 'upload:index' %}";
+
+    }, 2000);
+</script>

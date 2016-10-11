@@ -1,8 +1,8 @@
-{% if all_files %}
+{% if object_list %}
 
     <h2>Uploaded files</h2>
-    {% for file in all_files %}
-        <a href="{% url 'upload:detail' file.id %}">{{ file.name }}</a> - <a href=""> Download </a>
+    {% for file in object_list %}
+        <a href="{% url 'upload:download' file.id %}">{{ file.name }} - Download </a>
         <br>
     {% endfor %}
 
@@ -10,5 +10,15 @@
     <h3>No items have been uploaded</h3>
 {% endif %}
 
-<a href="{% url 'upload:file-add' %}">Click here to upload a file</a>
-{#    </form>#}
+<br><br><br>
+<a href="{% url 'upload:file-add' %}">
+    <h1>
+        Click here to upload a file
+    </h1>
+</a>
+
+<a href="{% url 'upload:file-add' %}">
+    <h1>
+        Click here to receive files
+    </h1>
+</a>
