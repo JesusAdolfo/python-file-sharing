@@ -32,6 +32,12 @@ class SuccessView(generic.TemplateView):
     template_name = 'upload/sucess.html'
 
 
+class FilesView(generic.ListView):
+    template_name = 'upload/files.html'
+
+    def get_queryset(self):
+        return Upload.objects.all()
+
 def download(request, upload_id):
     my_file = Upload.objects.get(pk=upload_id)
     print("test==", my_file.file)

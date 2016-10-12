@@ -1,0 +1,29 @@
+{% if object_list %}
+
+    <h2>Uploaded files</h2>
+    {% for file in object_list %}
+        <a href="{% url 'upload:download' file.id %}">{{ file.name }} - Download </a>
+        <br>
+    {% endfor %}
+
+{% else %}
+    <h3>No items have been uploaded</h3>
+{% endif %}
+<h3>Refreshes every 30 seconds</h3>
+
+<br><br><br>
+<a href="{% url 'upload:index' %}">
+    <h1>
+        Back
+    </h1>
+</a>
+
+
+<script>
+    window.setTimeout(function(){
+
+        // Move to a new location or you can do something else
+        window.location.href = "{% url 'upload:files' %}";
+
+    }, 30000);
+</script>

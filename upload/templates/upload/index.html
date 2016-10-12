@@ -1,23 +1,10 @@
-{% if object_list %}
-
-    <h2>Uploaded files</h2>
-    {% for file in object_list %}
-        <a href="{% url 'upload:download' file.id %}">{{ file.name }} - Download </a>
-        <br>
-    {% endfor %}
-
-{% else %}
-    <h3>No items have been uploaded</h3>
-{% endif %}
-
-<br><br><br>
 <a href="{% url 'upload:file-add' %}">
     <h1>
         Click here to upload a file
     </h1>
 </a>
-
-<a href="{% url 'upload:file-add' %}">
+<br><br>g
+<a href="{% url 'upload:files' %}">
     <h1>
         Click here to receive files
     </h1>

@@ -17,6 +17,9 @@ urlpatterns = [
     #upload/success
     url(r'sucess/$', views.SuccessView.as_view(), name='success'),
 
+    #upload/files
+    url(r'files/$', views.FilesView.as_view(), name='files'),
+
     url(r'^downloads/(?P<upload_id>[0-9]+)/$', views.download, name='download'),
 
 ]
